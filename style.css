@@ -1,0 +1,443 @@
+/* VARIABLES DE COLOR */
+:root {
+    --color-bg-dark: #1A1A2E;
+    --color-card-dark: #232949;
+    --color-accent-green: #4BE9A3;
+    --color-text-light: #EBEBF2;
+    --color-shadow-dark: #131327; /* Sombra Oscura para Neumorfismo */
+    --color-shadow-light: #2E2E5B; /* Reflejo Claro para Neumorfismo */
+    --color-error: #E94B4B;
+    --color-info: #4299e1;
+}
+
+/* 🧱 RESET & TIPOGRAFÍA */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-light);
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#main-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 10px 0;
+}
+
+#main-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.highlight {
+    color: var(--color-accent-green);
+    font-weight: 900;
+}
+
+/* 📐 LAYOUT PRINCIPAL (Responsivo) */
+.tts-container {
+    display: grid;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    grid-template-areas: 
+        "controls"
+        "text-area"
+        "pdf-state";
+}
+
+@media (min-width: 992px) {
+    .tts-container {
+        grid-template-columns: 300px 1fr 300px;
+        grid-template-areas: 
+            "controls text-area pdf-state";
+        align-items: start;
+    }
+    .panel-main { grid-area: controls; }
+    .text-area-section { grid-area: text-area; }
+    .panel-pdf { grid-area: pdf-state; }
+}
+
+/* 💳 ESTILOS BASE DE PANELES Y CONTROLES (Neumorfismo) */
+.control-panel, .text-area-section {
+    background-color: var(--color-card-dark);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 
+        7px 7px 15px var(--color-shadow-dark),
+        -7px -7px 15px var(--color-shadow-light);
+    transition: box-shadow 0.3s ease;
+}
+
+.control-panel h2 {
+    color: var(--color-accent-green);
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(75, 233, 163, 0.2);
+    padding-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+/* 📝 TEXTAREA */
+.text-area-section {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+#text-input {
+    width: 100%;
+    flex-grow: 1;
+    min-height: 250px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--color-shadow-dark); /* Color más oscuro que el fondo */
+    color: var(--color-text-light);
+    resize: none;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: inset 3px 3px 6px var(--color-shadow-dark),
+                inset -3px -3px 6px var(--color-shadow-light);
+    transition: all 0.2s;
+}
+
+#text-input:focus {
+    box-shadow: inset 2px 2px 5px var(--color-shadow-dark),
+                inset -2px -2px 5px var(--color-shadow-light),
+                0 0 0 2px var(--color-accent-green); /* Foco visible */
+}
+
+/* 🎚️ CONTROLES DE FORMULARIO */
+.control-group {
+    margin-bottom: 15px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 300;
+}
+
+.control-input, #voice-select {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--color-shadow-dark);
+    color: var(--color-text-light);
+    appearance: none; /* Elimina estilos nativos del select */
+    outline: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px var(--color-shadow-dark);
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* 🔊 SLIDER ESTILIZADO */
+.control-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: var(--color-shadow-dark);
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.control-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-accent-green);
+    cursor: pointer;
+    box-shadow: 0 0 5px var(--color-accent-green);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.control-slider:hover::-webkit-slider-thumb {
+    background: #75ffe0;
+}
+
+/* ⏯️ BOTONES PRINCIPALES */
+.audio-controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.main-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: var(--color-card-dark);
+    color: var(--color-text-light);
+    box-shadow: 5px 5px 10px var(--color-shadow-dark),
+                -5px -5px 10px var(--color-shadow-light);
+}
+
+.main-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 15px var(--color-shadow-dark),
+                -8px -8px 15px var(--color-shadow-light);
+}
+
+.main-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: inset 2px 2px 5px var(--color-shadow-dark),
+                inset -2px -2px 5px var(--color-shadow-light);
+}
+
+/* Colores de botones */
+.play-btn { color: var(--color-accent-green); }
+.stop-btn { color: var(--color-error); }
+.pause-btn { color: var(--color-info); }
+.clear-btn { color: var(--color-text-light); }
+
+.main-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: inset 2px 2px 5px var(--color-shadow-dark);
+}
+
+/* 📢 ESTADO & PROGRESO */
+.status-message {
+    padding: 10px 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    border-left: 5px solid;
+}
+
+.status-info { border-left-color: var(--color-info); background-color: rgba(66, 153, 225, 0.1); }
+.status-success { border-left-color: var(--color-accent-green); background-color: rgba(75, 233, 163, 0.1); }
+.status-error { border-left-color: var(--color-error); background-color: rgba(233, 75, 75, 0.1); }
+.status-warning { border-left-color: var(--color-info); background-color: rgba(233, 209, 75, 0.1); }
+
+
+/* 进度 BARRA DE PROGRESO */
+.progress-container {
+    height: 10px;
+    background-color: var(--color-shadow-dark);
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 15px 0;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--color-accent-green);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    position: absolute;
+    right: 10px;
+    top: -25px;
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+}
+
+/* 📊 STATS BAR */
+.stats-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0 5px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* 📤 DRAG AND DROP */
+.drop-zone {
+    position: relative;
+    border: 2px dashed rgba(235, 235, 242, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.drop-zone.drag-over {
+    border-color: var(--color-accent-green);
+    background-color: rgba(75, 233, 163, 0.05);
+}
+
+.drop-zone .drop-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(35, 41, 73, 0.9);
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-accent-green);
+    pointer-events: none; /* Crucial para que los eventos pasen al elemento subyacente */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.drop-zone.drag-over .drop-overlay {
+    opacity: 1;
+}
+.progress-container {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: #2c2c2c;
+    border-radius: 5px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #1e88e5);
+    transition: width 0.4s ease;
+}
+.progress-text {
+    position: absolute;
+    top: -22px;
+    right: 0;
+    font-size: 12px;
+    color: #ccc;
+}
+
+/* Estilo para el input de archivo PDF */
+.file-label {
+    display: block;
+    padding: 10px 15px;
+    background-color: var(--color-shadow-dark);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.file-label:hover {
+    background-color: var(--color-shadow-light);
+}
+
+.hidden-input {
+    display: none;
+}
+
+.pdf-file-info {
+    font-size: 0.9rem;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    background-color: rgba(75, 233, 163, 0.1);
+    border: 1px solid var(--color-accent-green);
+}
+
+/* ⌨️ MODAL DE AYUDA */
+.help-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.help-modal[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.help-content {
+    background-color: var(--color-card-dark);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+    max-width: 400px;
+    width: 90%;
+}
+
+.help-modal[aria-hidden="false"] .help-content {
+    transform: scale(1);
+}
+
+.help-content h3 {
+    color: var(--color-accent-green);
+    margin-bottom: 20px;
+}
+
+.help-content ul {
+    list-style: none;
+}
+
+.help-content li {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+kbd {
+    background-color: var(--color-bg-dark);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    border: 1px solid var(--color-shadow-light);
+}
+
+/* 💥 ERRORES CRÍTICOS (del JS) */
+.critical-error {
+    /* Estilos base ya definidos en el JS, pero por si acaso. */
+    z-index: 10000;
+}
+footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+footer p{
+    display:flex;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+footer img{
+    width: 150px;
+    margin-top: 10px;
+}

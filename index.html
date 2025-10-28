@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TTS X - Lector de Texto y PDF Avanzado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header id="main-header">
+      <h1>Texto a <span class="highlight">Voz</span></h1>
+      <p>Tu experiencia de audio-lectura avanzada 🎧</p>
+    </header>
+    <main class="tts-container">
+      <section class="control-panel panel-main">
+        <h2>Configuración de Voz</h2>
+        <div class="control-group">
+          <label for="voice-select">Voz (Total: <span id="voices-count">0</span>)</label>
+          <select id="voice-select" class="control-input"></select>
+        </div>
+        <div class="control-grid">
+          <div class="control-group">
+            <label for="rate-control">Velocidad: <span id="rate-value">1.0x</span></label>
+            <input type="range" id="rate-control" min="0.5" max="2" step="0.1" value="1" class="control-slider" />
+          </div>
+          <div class="control-group">
+            <label for="pitch-control">Tono: <span id="pitch-value">1.0</span></label>
+            <input type="range" id="pitch-control" min="0.5" max="2" step="0.1" value="1" class="control-slider" />
+          </div>
+        </div>
+        <div class="stats-bar">
+          <span>Palabras: <b id="word-count">0</b></span>
+          <span>Caracteres: <b id="char-count">0</b></span>
+        </div>
+      </section>
+      <section class="text-area-section">
+        <div id="text-drop-zone" class="drop-zone">
+          <textarea id="text-input" placeholder="Pega tu texto aquí o arrastra un archivo..." rows="15"></textarea>
+          <div class="drop-overlay">Arrastra aquí para cargar Texto o PDF</div>
+        </div>
+        <div class="audio-controls">
+          <button id="play-btn" class="main-btn play-btn" disabled><i class="fas fa-play"></i> Reproducir</button>
+          <button id="pause-btn" class="main-btn pause-btn" disabled><i class="fas fa-pause"></i> Pausar</button>
+          <button id="stop-btn" class="main-btn stop-btn" disabled><i class="fas fa-stop"></i> Detener</button>
+          <button id="clear-btn" class="main-btn clear-btn"><i class="fas fa-trash-alt"></i> Limpiar</button>
+        </div>
+      </section>
+      <section class="control-panel panel-pdf">
+        <h2>Carga y Estado</h2>
+        <div id="pdf-drop-zone" class="control-group drop-zone">
+          <label for="pdf-input" class="file-label"><i class="fas fa-file-pdf"></i> Cargar PDF o TXT</label>
+          <input type="file" id="pdf-input" accept=".pdf,.txt" class="hidden-input" />
+          <div class="drop-overlay">Arrastra aquí para cargar PDF o TXT</div>
+        </div>
+        <p id="pdf-info" class="pdf-file-info" hidden></p>
+        <div id="status" class="status-message status-info">🎉 Inicializando...</div>
+        <div id="progressContainer" class="progress-container" style="display: none">
+          <div id="progressBar" class="progress-bar"></div>
+          <span id="progressText" class="progress-text">0%</span>
+        </div>
+      </section>
+    </main>
+    <div id="keyboard-help" class="help-modal" aria-hidden="true">
+      <div class="help-content">
+        <h3>Atajos de Teclado (F1 para cerrar)</h3>
+        <ul>
+          <li><kbd>Espacio</kbd>: Reproducir / Pausar</li>
+          <li><kbd>Ctrl</kbd> + <kbd>P</kbd>: Reproducir</li>
+          <li><kbd>Ctrl</kbd> + <kbd>S</kbd>: Detener</li>
+          <li><kbd>Ctrl</kbd> + <kbd>C</kbd>: Limpiar Todo</li>
+          <li><kbd>Ctrl</kbd> + <kbd>L</kbd>: Enfocar Texto</li>
+        </ul>
+      </div>
+    </div>
+    <footer>
+    <p>Desarrollado por Cesar Martinez 2025 - Todos los derechos reservados.</p>
+    <img src="/img/logo_letra_blanca_sin_fondo.png" alt="Logo desarrollador"/>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      if (typeof pdfjsLib !== "undefined") {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+      }
+    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0"
+        }
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="gsap-animations.js"></script>
+    <script type="module" src="voz.js"></script>
+    <script src="sweetalert-config.js"></script>
+  </body>
+</html>

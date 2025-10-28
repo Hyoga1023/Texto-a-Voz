@@ -1,0 +1,132 @@
+/* reset.css - reinicio moderno y minimalista */
+
+/* Modelo de caja más predecible */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Eliminar márgenes/paddings por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Altura base */
+html, body, #root {
+    height: 100%;
+}
+
+/* Ajustes globales */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    line-height: 1.15;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    min-height: 100vh;
+    background: #fff;
+    color: #000;
+    -webkit-font-feature-settings: "liga" 1;
+}
+
+/* Imágenes y medios responsivos */
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tipografía consistente */
+h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* Listas sin estilo por defecto */
+ul, ol {
+    list-style: none;
+}
+
+/* Enlaces neutros */
+a {
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+/* Formularios: heredar tipografías y colores */
+button, input, select, textarea, optgroup {
+    font: inherit;
+    color: inherit;
+    margin: 0;
+    background: transparent;
+    border-radius: 0;
+    line-height: normal;
+}
+
+/* Botones básicos */
+button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+/* Quitar relleno interno en Firefox */
+::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* Placeholder */
+::placeholder {
+    color: inherit;
+    opacity: 0.6;
+}
+
+/* Tablas */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Fieldset/legend */
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* Details/summary */
+details {
+    display: block;
+}
+summary {
+    display: list-item;
+    cursor: pointer;
+}
+
+/* Accesibilidad: enfoque visible pero no intrusivo */
+:focus {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
